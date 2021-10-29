@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_010505) do
+ActiveRecord::Schema.define(version: 2021_10_29_212516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_010505) do
     t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "balance_in_cents"
     t.index ["account_number"], name: "index_bank_accounts_on_account_number", unique: true
     t.index ["person_id"], name: "index_bank_accounts_on_person_id"
   end
@@ -33,6 +34,16 @@ ActiveRecord::Schema.define(version: 2021_10_29_010505) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["rg"], name: "index_people_on_rg", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "bank_account_id", null: false
+    t.string "kind", null: false
+    t.bigint "amount_in_cents", null: false
+    t.datetime "transaction_hour", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bank_account_id"], name: "index_transactions_on_bank_account_id"
   end
 
   add_foreign_key "bank_accounts", "people"

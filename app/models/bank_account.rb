@@ -1,5 +1,6 @@
 class BankAccount < ApplicationRecord
-  belongs_to :people
+  belongs_to :person
+  has_many :transactions
 
   validates :person_id, :account_number, :password_digest, presence: true
   validates :account_number, uniqueness: true
@@ -10,8 +11,22 @@ class BankAccount < ApplicationRecord
   def self.initialize_account
     account_number = generate_account_number
 
-    self.new(account_number: account_number, password_digest: TEMP_PASSWORD)
+    self.new(account_number: account_number, password_digest: TEMP_PASSWORD, balance_in_cents: 0)
   end
+
+  def calculate_balance
+    balance_in_cents =
+      transactions.order(:transaction_hour).inject(0) do |balance, transaction|
+        if transaction.kind == 'C'
+          balance + transaction.amount_in_cents
+        else
+          balance - transaction.amount_in_cents
+        end
+      end
+    amount, cents = "#{balance_in_cents / 100.0}"
+
+    "R$ #{amount}#{cents}"
+    end
 
   private
 

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :bank_accounts
-  resources :clients
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  post '/bank_accounts', to: 'bank_accounts#create'
+
+  namespace :bank_accounts do
+    get '/:account_number/report', to: 'report#index'
+    post '/:account_number/transactions', to: 'transactions#create'
+  end
 end
