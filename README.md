@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# API BANK
 
-Things you may want to cover:
+## Requisitos Necessários:
 
-* Ruby version
+* Ruby 2.7.4
+* PostgreSQL
+* Rails 6
 
-* System dependencies
+## Funcionalidades
 
-* Configuration
+- Cadastro de conta corrente aonde a pessoa deve informar, nome, data de nascimento e foto do CPF ou RG. O retorno deve ser uma conta e uma senha.
+- Débito/Crédito: Permitir debitar um valor ou creditar em uma determinada conta, retornando a conta, saldo anterior e o novo saldo.
+- Extrato: Permitir ao informar uma conta retornar o extrato da conta com saldo anterior, movimentações de débito e crédito e ao final o saldo atualizado.
 
-* Database creation
+## Para executar o projeto:
 
-* Database initialization
+### Clone em sua máquina
 
-* How to run the test suite
+```shell
+git clone https://github.com/beto-machado/API_BANK.git
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Instale as dependências
+```shell
+bundle install
+```
 
-* Deployment instructions
+### Crie o Banco de Dados
+```shell
+rails db:create
+rails db:migrate
+```
 
-* ...
+### Execute a aplicação
+```shell
+rails s
